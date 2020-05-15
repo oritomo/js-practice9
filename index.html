@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSの勉強</title>
+  <style>
+    .job {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .warn {
+      font-size: 40px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+  スタートボタンをクリック→タイマーが動く（経過時間（ミリ秒）画面に表示）
+  ストップボタンを押すとタイマーが止まる
+  リセットボタンでクリア（タイマーが初期化）
+  スタートボタンを押す前はスタートボタンしか押せない（他のボタンは機能しない）
+  スタートボタンを押すとストップボタンのみ機能する
+  ストップボタンを押すとリセットボタンとスタートボタン(2度目・再クリック)が機能する
+  
+  ＜elapsedTimeを後から実装した場合の言語化＞
+  ストップボタンを押した時の経過時間を保持（ここで経過時間を変数宣言する必要があることに気づく
+  →NaNが出たので初期値に0を指定）
+  スタートボタンを再びクリックした時に、前回保持した経過時間を更新するように実装
+  リセットボタンを押したときにそれまでに累積した経過時間を初期化
+  -->
+
+  <div class="job">
+    <select name="job" id="select" multiple>
+      <option value="ラーメン">ラーメン</option>
+      <option value="寿司">寿司</option>
+      <option value="焼肉">焼肉</option>
+      <option value="ハンバーグ">ハンバーグ</option>
+      <option value="山盛りポテチ">山盛りポテチ</option>
+    </select>
+    <h6 id="text"></h6>
+  </div>
+
+  <div id="text" div>
+
+    <script>
+      'use strict';
+      {
+        const text = document.getElementById('text');
+        const select = document.getElementById('select');
+        
+        const chosenList=[...select.options];
+      select.addEventListener('change',()=>{
+        const result=chosenList.every(function(el){
+          return el.selected;
+        });
+        if(result){
+          return text.textContent='食べ過ぎ・・・';
+        }
+
+        const choices=chosenList.reduce(function(arr,cur){
+          if(cur.selected){
+            arr.push(cur.value);
+          }
+          return arr;
+        },[]);
+
+        text.textContent=choices.join('と');
+      });
+
+        
+      }
+    </script>
+</body>
+
+</html>
